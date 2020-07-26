@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+html, body{
+    height: 100%;
+    overflow-y: hidden;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'fira code','Roboto', sans-serif;
+}
+
+body{
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.content{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header{
+    height: 10vh;
+    display: flex;
+    padding: 10px;
+    justify-content: flex-end;
+}
+
+iframe{
+    width: 100%;
+    background-color: white;
+    height: 40vh;
+}
+
+.editors{
+    height: 40vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+footer{
+    height: 5vh;
+    padding: 10px 5px;
+}
+
