@@ -1,33 +1,73 @@
 <!doctype html>
 <html>
     <head>
-        <title>Frontend Playground</title>
+        <title>Rocket-Runner</title>
         <link rel="stylesheet" type="text/css" href="/lib/codemirror.css">
         <link rel="stylesheet" type="text/css" href="/lib/dracula.css">
         <script src="/lib/codemirror.js" ></script>
         <script src="/lib/mode/javascript/javascript.js" ></script>
-        <style>
-            /* iframe { visibility: hidden;} */
-        </style>
+        <script src="/lib/mode/css/css.js" ></script>
+        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <textarea id="editor"></textarea>
-        <button onclick="submit_html();">Submit</button>
-        <iframe id="result"></iframe>
-    </body>
-    <script >
-        var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
-            lineNumbers: true,
-            mode:  "javascript",
-            theme: "dracula"
-        });
+        <div class="content">
+            <header>
+                <button onclick="submit_all()">Submit</button>
+            </header>
+            <div class="editors">
+                <div class="editor">
+                    <textarea id="editor-html"></textarea>
+                </div>
+                <div class="editor">
+                    <textarea id="editor-css"></textarea>
+                </div>
+                <div class="editor">
+                    <textarea id="editor-js"></textarea>
+                </div>
+            </div>
+            <iframe id="result"></iframe>
+            <footer>
+            </footer>
+        </div>
+        <script >
+            var editorJs = CodeMirror.fromTextArea(document.getElementById("editor-js"), {
+                lineNumbers: true,
+                mode:  "javascript",
+                theme: "dracula",
+                dragDrop: true
+            });
+    
+            var editorHtml = CodeMirror.fromTextArea(document.getElementById("editor-html"), {
+                lineNumbers: true,
+                mode:  "html",
+                theme: "dracula",
+            });
+    
+            var editorCss = CodeMirror.fromTextArea(document.getElementById("editor-css"), {
+                lineNumbers: true,
+                mode:  "css",
+                theme: "dracula",
+            });
+    
+            function submit_all()
+            {
 
-        function submit_html()
-        {
-            editor.save();
-            var code = document.getElementById("editor").value;
-            var data_url = "data:text/html;charset=utf-8;base64," + window.btoa(code);
-            document.getElementById("result").src = data_url;
-        }
-    </script>
+                editorHtml.save();
+                var code = document.getElementById("editor-html").value;
+                var data_url = "data:text/html;charset=utf-8;base64," + window.btoa(code);
+                document.getElementById("result").src = data_url;
+                
+                editorCss.save();
+                code = document.getElementById("editor-css").value;
+                data_url = "data:text/html;charset=utf-8;base64," + window.btoa(code);
+                document.getElementById("result").src = data_url;
+                
+                editorJs.save();
+                code = document.getElementById("editor-js").value;
+                data_url = "data:text/html;charset=utf-8;base64," + window.btoa(eval(code));
+                document.getElementById("result").src = data_url;
+
+            }
+        </script>
+    </body>
 </html>
