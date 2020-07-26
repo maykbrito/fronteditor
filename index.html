@@ -17,6 +17,8 @@
         <script src="/lib/hint/show-hint.js" ></script>
         <script src="/lib/hint/sql-hint.js" ></script>
         <script src="/lib/hint/xml-hint.js" ></script>
+        <script src="/lib/browser.js"></script>
+
         <style>
             iframe { 
                 width: 100%;
@@ -43,7 +45,6 @@
     </head>
     <body>
         <textarea id="editor"></textarea>
-        <!-- <button onclick="submit_html();">Submit</button> -->
         <iframe id="result"></iframe>
     </body>
     <script >
@@ -51,14 +52,15 @@
             lineNumbers: true,
             mode:  { name: "htmlmixed" },
             theme: "dracula",
-            extraKeys: {"Ctrl-Space": "autocomplete"},
-            focus: (instance, changeObj) => {
-                console.log('entrei')
+            extraKeys: {
+                "Ctrl-Space": "autocomplete",
+                'Tab': 'emmetExpandAbbreviation',
+                'Esc': 'emmetResetAbbreviation',
+                'Enter': 'emmetInsertLineBreak'
             }
         })
 
         editor.on('keyup', debounceEvent(handleKeyup))
-    
 
         function submit_html()
         {
