@@ -4,22 +4,54 @@
         <title>Frontend Playground</title>
         <link rel="stylesheet" type="text/css" href="/lib/codemirror.css">
         <link rel="stylesheet" type="text/css" href="/lib/dracula.css">
+        <link rel="stylesheet" type="text/css" href="/lib/hint/show-hint.css">
         <script src="/lib/codemirror.js" ></script>
+        <script src="/lib/mode/htmlmixed/htmlmixed.js" ></script>
+        <script src="/lib/mode/xml/xml.js" ></script>
+        <script src="/lib/mode/css/css.js" ></script>
         <script src="/lib/mode/javascript/javascript.js" ></script>
+        <script src="/lib/hint/anyword-hint.js" ></script>
+        <script src="/lib/hint/javascript-hint.js" ></script>
+        <script src="/lib/hint/html-hint.js" ></script>
+        <script src="/lib/hint/css-hint.js" ></script>
+        <script src="/lib/hint/show-hint.js" ></script>
+        <script src="/lib/hint/sql-hint.js" ></script>
+        <script src="/lib/hint/xml-hint.js" ></script>
         <style>
-            /* iframe { visibility: hidden;} */
+            iframe { 
+                width: 100%;
+                height: 100%;
+                border: 1px solid hsl(32, 98%, 52%)
+            }
+            * {
+                margin:0; padding:0; box-sizing: border-box;
+            }
+
+            body {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+
+                height: 100vh;
+            } 
+
+            .CodeMirror {
+                width: 100%;
+                height: 100vh;
+            }
+
         </style>
     </head>
     <body>
         <textarea id="editor"></textarea>
-        <button onclick="submit_html();">Submit</button>
+        <!-- <button onclick="submit_html();">Submit</button> -->
         <iframe id="result"></iframe>
     </body>
     <script >
         var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
             lineNumbers: true,
-            mode:  "javascript",
-            theme: "dracula"
+            mode:  { name: "htmlmixed" },
+            theme: "dracula",
+            extraKeys: {"Ctrl-Space": "autocomplete"},
         });
 
         function submit_html()
