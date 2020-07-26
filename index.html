@@ -52,14 +52,30 @@
             mode:  { name: "htmlmixed" },
             theme: "dracula",
             extraKeys: {"Ctrl-Space": "autocomplete"},
-        });
+            focus: (instance, changeObj) => {
+                console.log('entrei')
+            }
+        })
+
+        editor.on('keyup', debounceEvent(handleKeyup))
+    
 
         function submit_html()
         {
             editor.save();
             var code = document.getElementById("editor").value;
             var data_url = "data:text/html;charset=utf-8;base64," + window.btoa(code);
+            console.log(data_url);
             document.getElementById("result").src = data_url;
         }
+
+        function debounceEvent(fn, wait = 1000, time) {
+            return (...args) => clearTimeout(time, time = setTimeout(() => fn(...args), wait))
+        } 
+
+        function handleKeyup(event) {
+            submit_html()
+        }
+
     </script>
 </html>
