@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Frontend Playground</title>
+        <link rel="stylesheet" type="text/css" href="/lib/codemirror.css">
+        <link rel="stylesheet" type="text/css" href="/lib/dracula.css">
+        <script src="/lib/codemirror.js" ></script>
+        <script src="/lib/mode/javascript/javascript.js" ></script>
+        <style>
+            /* iframe { visibility: hidden;} */
+        </style>
+    </head>
+    <body>
+        <textarea id="editor"></textarea>
+        <button onclick="submit_html();">Submit</button>
+        <iframe id="result"></iframe>
+    </body>
+    <script >
+        var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+            lineNumbers: true,
+            mode:  "javascript",
+            theme: "dracula"
+        });
+
+        function submit_html()
+        {
+            editor.save();
+            var code = document.getElementById("editor").value;
+            var data_url = "data:text/html;charset=utf-8;base64," + window.btoa(code);
+            document.getElementById("result").src = data_url;
+        }
+    </script>
+</html>
