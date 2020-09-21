@@ -85,6 +85,8 @@ iframe {
     right: 50%;
 
     text-align: center;
+
+    z-index: 999;
 }
 
 .tab-links button {
