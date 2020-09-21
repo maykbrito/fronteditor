@@ -5,6 +5,9 @@
         <link rel="stylesheet" type="text/css" href="/lib/codemirror.css">
         <link rel="stylesheet" type="text/css" href="/lib/dracula.css">
         <link rel="stylesheet" type="text/css" href="/lib/hint/show-hint.css">
+        <link rel="stylesheet" href="src/style.css">
+        
+        
         <script src="/lib/codemirror.js" ></script>
         <script src="/lib/mode/htmlmixed/htmlmixed.js" ></script>
         <script src="/lib/mode/xml/xml.js" ></script>
@@ -19,65 +22,48 @@
         <script src="/lib/hint/xml-hint.js" ></script>
         <script src="/lib/browser.js"></script>
 
-        <style>
-            iframe { 
-                width: 100%;
-                height: 100%;
-                border: 1px solid hsl(32, 98%, 52%)
-            }
-            * {
-                margin:0; padding:0; box-sizing: border-box;
-            }
-
-            body {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-
-                height: 100vh;
-            } 
-
-            .CodeMirror {
-                width: 100%;
-                height: 100vh;
-            }
-
-        </style>
     </head>
     <body>
-        <textarea id="editor"></textarea>
-        <iframe id="result"></iframe>
+        <div id="container">
+            <div id="left_panel"> 
+                <div id="tabs">
+                    <div class="tab-links">
+                      <button data-id="html" data-open>html</button>
+                      <button data-id="css">css</button>
+                      <button data-id="js">js</button>
+                    </div>
+
+                    <div class="tab-contents">
+                        <section id="html">
+                            <textarea id="editor-html"></textarea>
+                        </section>
+                        <section id="css">
+                            <textarea id="editor-css"></textarea>
+                        </section>
+                        <section id="js">
+                            <textarea id="editor-js"></textarea>
+                        </section>
+                    </div>
+                </div>
+                
+            </div>
+            <div id="right_panel">
+                <div id="drag"></div> 
+                <iframe id="result" frameBorder=0></iframe>
+            </div>
+        </div>
+        
     </body>
-    <script >
-        var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
-            lineNumbers: true,
-            mode:  { name: "htmlmixed" },
-            theme: "dracula",
-            extraKeys: {
-                "Ctrl-Space": "autocomplete",
-                'Tab': 'emmetExpandAbbreviation',
-                'Esc': 'emmetResetAbbreviation',
-                'Enter': 'emmetInsertLineBreak'
-            }
+    <script type="module">
+        import editor from './src/editor.js'
+        import resizeable from './src/resizeable.js'
+        import tabs from './src/tabs.js'
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            editor()
+            resizeable()
+            tabs()
         })
-
-        editor.on('keyup', debounceEvent(handleKeyup))
-
-        function submit_html()
-        {
-            editor.save();
-            var code = document.getElementById("editor").value;
-            var data_url = "data:text/html;charset=utf-8;base64," + window.btoa(code);
-            console.log(data_url);
-            document.getElementById("result").src = data_url;
-        }
-
-        function debounceEvent(fn, wait = 1000, time) {
-            return (...args) => clearTimeout(time, time = setTimeout(() => fn(...args), wait))
-        } 
-
-        function handleKeyup(event) {
-            submit_html()
-        }
 
     </script>
 </html>
