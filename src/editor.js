@@ -2,26 +2,26 @@ export default function () {
 
     const renderedEditors = []
 
+    const configEditor = name => options => 
+    CodeMirror.fromTextArea(document.getElementById(`editor-${name}`), {
+        mode:  { name },
+        ...options
+    })
+
     const editors = {
-        html: (options) => CodeMirror.fromTextArea(document.getElementById("editor-html"), {
-            mode:  { name: "htmlmixed" },
-            ...options
-        }),
-        css: (options) => CodeMirror.fromTextArea(document.getElementById("editor-css"), {
-            mode:  { name: "css" },
-            ...options
-        }),
-        js: (options) => CodeMirror.fromTextArea(document.getElementById("editor-js"), {
-            mode:  { name: "javascript" },
-            ...options
-        })
+        htmlmixed: configEditor("htmlmixed"),
+        css: configEditor("css"),
+        javascript: configEditor("javascript"),
+        markdown: configEditor("markdown"),
     }
 
     Object.keys(editors).forEach(id => {
         const options = {
             lineNumbers: true,
             lineWrapping: true,
-            theme :'dracula',
+            theme: id !== 'markdown' ? 'dracula' : 'default',
+            foldGutter: true,
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
             extraKeys : {
                 "Ctrl-Space": "autocomplete",
                 'Tab': 'emmetExpandAbbreviation',
@@ -29,6 +29,9 @@ export default function () {
                 'Enter': 'emmetInsertLineBreak',
                 'Cmd-/': 'emmetToggleComment',
                 'Ctrl-/': 'emmetToggleComment',
+                "Ctrl-Q": function(cm){
+                    cm.foldCode(cm.getCursor());
+                }
             }
         };
 
@@ -43,13 +46,13 @@ export default function () {
     })
 
     const codes = value => ({
-        html: value,
+        htmlmixed: value,
         css: `<style>${value}</style>`,
-        js: `<script>${value}</script>`
+        javascript: `<script>${value}</script>`,
+        markdown: ''
     })
 
     function addCodeToIframe(code) {
-        console.log(code)
         const data_url = "data:text/html;charset=utf-8;base64," + window.btoa(code);
         document.getElementById("result").src = data_url; 
     }   
@@ -58,7 +61,6 @@ export default function () {
     {
         let editorValue = ''
         renderedEditors.forEach(({id, editor}) => {
-            console.log(id)
             editor.save()
 
             let value = document.getElementById(`editor-${id}`).value;

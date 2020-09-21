@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>Frontend Playground</title>
+        <title>Frontenditor</title>
         <link rel="stylesheet" type="text/css" href="/lib/codemirror.css">
         <link rel="stylesheet" type="text/css" href="/lib/dracula.css">
         <link rel="stylesheet" type="text/css" href="/lib/hint/show-hint.css">
@@ -9,17 +9,30 @@
         
         
         <script src="/lib/codemirror.js" ></script>
+
         <script src="/lib/mode/htmlmixed/htmlmixed.js" ></script>
-        <script src="/lib/mode/xml/xml.js" ></script>
-        <script src="/lib/mode/css/css.js" ></script>
+        <script src="/lib/mode/xml/xml.js"></script>
+        <script src="/lib/mode/css/css.js"></script>
         <script src="/lib/mode/javascript/javascript.js" ></script>
-        <script src="/lib/hint/anyword-hint.js" ></script>
-        <script src="/lib/hint/javascript-hint.js" ></script>
-        <script src="/lib/hint/html-hint.js" ></script>
-        <script src="/lib/hint/css-hint.js" ></script>
-        <script src="/lib/hint/show-hint.js" ></script>
-        <script src="/lib/hint/sql-hint.js" ></script>
-        <script src="/lib/hint/xml-hint.js" ></script>
+        <script src="/lib/mode/markdown/markdown.js" ></script>
+
+        <!-- fold -->
+        <script src="/lib/addon/fold/foldcode.js"></script>
+        <script src="/lib/addon/fold/foldgutter.js"></script>
+        <script src="/lib/addon/fold/brace-fold.js"></script>
+        <script src="/lib/addon/fold/xml-fold.js"></script>
+        <script src="/lib/addon/fold/indent-fold.js"></script>
+        <script src="/lib/addon/fold/markdown-fold.js"></script>
+        
+        <!-- hint -->
+        <script src="/lib/addon/hint/anyword-hint.js" ></script>
+        <script src="/lib/addon/hint/javascript-hint.js" ></script>
+        <script src="/lib/addon/hint/html-hint.js" ></script>
+        <script src="/lib/addon/hint/css-hint.js" ></script>
+        <script src="/lib/addon/hint/show-hint.js" ></script>
+        <script src="/lib/addon/hint/sql-hint.js" ></script>
+        <script src="/lib/addon/hint/xml-hint.js" ></script>
+
         <script src="/lib/browser.js"></script>
 
     </head>
@@ -28,20 +41,24 @@
             <div id="left_panel"> 
                 <div id="tabs">
                     <div class="tab-links">
-                      <button data-id="html" data-open>html</button>
+                      <button data-id="htmlmixed" data-open>html</button>
                       <button data-id="css">css</button>
-                      <button data-id="js">js</button>
+                      <button data-id="javascript">js</button>
+                      <button data-id="markdown">md</button>
                     </div>
 
                     <div class="tab-contents">
-                        <section id="html">
-                            <textarea id="editor-html"></textarea>
+                        <section id="htmlmixed">
+                            <textarea id="editor-htmlmixed"></textarea>
                         </section>
                         <section id="css">
                             <textarea id="editor-css"></textarea>
                         </section>
-                        <section id="js">
-                            <textarea id="editor-js"></textarea>
+                        <section id="javascript">
+                            <textarea id="editor-javascript"></textarea>
+                        </section>
+                        <section id="markdown">
+                            <textarea id="editor-markdown"></textarea>
                         </section>
                     </div>
                 </div>
