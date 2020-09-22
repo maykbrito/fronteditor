@@ -84,6 +84,7 @@ export default function () {
             })
 
             // if has data on storage, put it back to editor
+            
             const data = Storage.get(editorName)
 
             if (data) {
