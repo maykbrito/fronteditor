@@ -1,5 +1,5 @@
-import mevent from './mevent.js';
-import draggable from './draggable.js';
+import mevent from './lib/mevent.js';
+import draggable from './lib/draggable.js';
 
 export default function(element) {
     let header = element.querySelector('header') || false;
@@ -72,6 +72,7 @@ export default function(element) {
         mevent.trigger('floatWindowOpen');
     }
 
+    // to speed up css resize. without it, all things became slower
     element.ontransitionend = () => {
         element.style.transitionProperty = '';
         element.style.transitionDuration = '0s';

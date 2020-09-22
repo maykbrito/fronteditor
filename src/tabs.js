@@ -1,4 +1,4 @@
-import mevent from './mevent.js';
+import mevent from './lib/mevent.js';
 
 export default function() {
 

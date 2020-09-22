@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="/lib/codemirror.css">
     <link rel="stylesheet" type="text/css" href="/lib/dracula.css">
     <link rel="stylesheet" type="text/css" href="/lib/hint/show-hint.css">
-    <link rel="stylesheet" href="src/style.css">
+    <link rel="stylesheet" href="style.css">
 
 
     <script src="/lib/codemirror.js"></script>
@@ -92,7 +92,7 @@
     </div>
 
     <script type="module">
-        import mevent from './src/mevent.js'
+        import mevent from './src/lib/mevent.js'
         import editor from './src/editor.js'
         import tabs from './src/tabs.js'
         import floatWindow from './src/floatWindow.js'
@@ -101,9 +101,7 @@
             editor()
             tabs()
 
-
             let previewWindow = document.getElementById("preview")
-
             floatWindow(previewWindow)
 
             // if it's dragging, adjust iframe to not interrupt it
@@ -127,6 +125,5 @@
 
     </script>
 </body>
-
 
 </html>
