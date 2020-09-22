@@ -53,7 +53,7 @@ export default function () {
     })
 
     function addCodeToIframe(code) {
-        const data_url = "data:text/html;charset=utf-8;base64," + window.btoa(code);
+        const data_url = "data:text/html;charset=utf-8;base64," + b64EncodeUnicode(code);
         document.getElementById("result").src = data_url; 
     }   
 
@@ -78,5 +78,16 @@ export default function () {
 
     function handleKeyup(event) {
         submit_html()
+    }
+
+    function b64EncodeUnicode(str) {
+        // https://stackoverflow.com/questions/30106476/using-javascripts-atob-to-decode-base64-doesnt-properly-decode-utf-8-strings
+        // first we use encodeURIComponent to get percent-encoded UTF-8,
+        // then we convert the percent encodings into raw bytes which
+        // can be fed into btoa.
+        return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+            function toSolidBytes(match, p1) {
+                return String.fromCharCode('0x' + p1);
+        }));
     }
 }
