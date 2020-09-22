@@ -1,4 +1,5 @@
-// need to implement pub/sub to make it more flexible
+import mevent from './mevent.js';
+
 export default function() {
     let 
         isResizing = false,
@@ -12,32 +13,10 @@ export default function() {
         handle = document.getElementById('drag');
 
 
-    /* when draggin, need to update .tab-links size */
-    function updateTabLinksSize() {
-        const tabLinks = document.querySelector('.tab-links')
-
-        if(isResizing) {
-            var offsetRight = container.offsetWidth - (clientX - offset(container).left);
-
-            tabLinks.style.right = offsetRight + 'px'
-        }
-    }
-
-    /* when dragging, iframe is a mess. It's because of z-index.
-    Let's do something about it */
-
-    function toggleZIndexIframe() {
-        let iframe = right.querySelector('iframe')
-        if(isResizing) {
-            iframe.style.zIndex = -1
-        } else {
-            iframe.style.zIndex = 0
-        }
-    }
-
     handle.addEventListener('mousedown', function (e) {
         isResizing = true;
         lastDownX = e.clientX;
+        mevent.trigger('isResizing', true)
     });
 
     window.addEventListener('mousemove', function (e) {
@@ -49,8 +28,7 @@ export default function() {
     window.addEventListener('mouseup', function (e) {
         // stop resizing
         isResizing = false;
-
-        toggleZIndexIframe()
+        mevent.trigger('isResizing', false)
     });
 
     function doResize(event) {
@@ -59,9 +37,6 @@ export default function() {
 
         left.style.right = offsetRight + 'px'
         right.style.width = offsetRight + 'px'
-
-        toggleZIndexIframe()
-        updateTabLinksSize()
     }
 
 

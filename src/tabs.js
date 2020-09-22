@@ -1,8 +1,11 @@
+import mevent from './mevent.js';
+
 export default function() {
+
     const $ = document.querySelector.bind(document)
 
     const html = {
-        links: [...$('.tab-links').children],
+        links: document.querySelectorAll('.tab-links button'),
         contents: [...$('.tab-contents').children],
         openTab: $('.tab-links [data-open]')
     }
@@ -32,6 +35,8 @@ export default function() {
 
         removeAllActiveClass()
         target.classList.add('active')
+
+        mevent.trigger('selectedTag', target.dataset.id)
     }
 
     function handleChange(){

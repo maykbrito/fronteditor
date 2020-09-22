@@ -1,86 +1,132 @@
-<!doctype html>
-<html>
-    <head>
-        <title>Frontenditor</title>
-        <link rel="stylesheet" type="text/css" href="/lib/codemirror.css">
-        <link rel="stylesheet" type="text/css" href="/lib/dracula.css">
-        <link rel="stylesheet" type="text/css" href="/lib/hint/show-hint.css">
-        <link rel="stylesheet" href="src/style.css">
-        
-        
-        <script src="/lib/codemirror.js" ></script>
+<!DOCTYPE html>
+<html lang="pt_BR">
 
-        <script src="/lib/mode/htmlmixed/htmlmixed.js" ></script>
-        <script src="/lib/mode/xml/xml.js"></script>
-        <script src="/lib/mode/css/css.js"></script>
-        <script src="/lib/mode/javascript/javascript.js" ></script>
-        <script src="/lib/mode/markdown/markdown.js" ></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- fold -->
-        <script src="/lib/addon/fold/foldcode.js"></script>
-        <script src="/lib/addon/fold/foldgutter.js"></script>
-        <script src="/lib/addon/fold/brace-fold.js"></script>
-        <script src="/lib/addon/fold/xml-fold.js"></script>
-        <script src="/lib/addon/fold/indent-fold.js"></script>
-        <script src="/lib/addon/fold/markdown-fold.js"></script>
-        
-        <!-- hint -->
-        <script src="/lib/addon/hint/anyword-hint.js" ></script>
-        <script src="/lib/addon/hint/javascript-hint.js" ></script>
-        <script src="/lib/addon/hint/html-hint.js" ></script>
-        <script src="/lib/addon/hint/css-hint.js" ></script>
-        <script src="/lib/addon/hint/show-hint.js" ></script>
-        <script src="/lib/addon/hint/sql-hint.js" ></script>
-        <script src="/lib/addon/hint/xml-hint.js" ></script>
+    <meta name="author" content="Mayk Brito">
+    <meta name="description" content="Editor para preview de front-end">
 
-        <script src="/lib/browser.js"></script>
+    <title>Frontenditor</title>
+    <link rel="stylesheet" type="text/css" href="/lib/codemirror.css">
+    <link rel="stylesheet" type="text/css" href="/lib/dracula.css">
+    <link rel="stylesheet" type="text/css" href="/lib/hint/show-hint.css">
+    <link rel="stylesheet" href="src/style.css">
 
-    </head>
-    <body>
-        <div id="container">
-            <div id="left_panel"> 
-                <div id="tabs">
-                    <div class="tab-links">
-                      <button data-id="htmlmixed" data-open>html</button>
-                      <button data-id="css">css</button>
-                      <button data-id="javascript">js</button>
-                      <button data-id="markdown">md</button>
+
+    <script src="/lib/codemirror.js"></script>
+
+    <script src="/lib/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="/lib/mode/xml/xml.js"></script>
+    <script src="/lib/mode/css/css.js"></script>
+    <script src="/lib/mode/javascript/javascript.js"></script>
+    <script src="/lib/mode/markdown/markdown.js"></script>
+
+    <!-- fold -->
+    <script src="/lib/addon/fold/foldcode.js"></script>
+    <script src="/lib/addon/fold/foldgutter.js"></script>
+    <script src="/lib/addon/fold/brace-fold.js"></script>
+    <script src="/lib/addon/fold/xml-fold.js"></script>
+    <script src="/lib/addon/fold/indent-fold.js"></script>
+    <script src="/lib/addon/fold/markdown-fold.js"></script>
+
+    <!-- hint -->
+    <script src="/lib/addon/hint/anyword-hint.js"></script>
+    <script src="/lib/addon/hint/javascript-hint.js"></script>
+    <script src="/lib/addon/hint/html-hint.js"></script>
+    <script src="/lib/addon/hint/css-hint.js"></script>
+    <script src="/lib/addon/hint/show-hint.js"></script>
+    <script src="/lib/addon/hint/sql-hint.js"></script>
+    <script src="/lib/addon/hint/xml-hint.js"></script>
+
+    <script src="/lib/browser.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;500&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <div id="container">
+        <div id="code">
+            <div id="tabs">
+                <div class="tab-links">
+                    <div>
+                        <h1>👁</h1>
+                        <button data-id="htmlmixed" data-open>html</button>
+                        <button data-id="css">css</button>
+                        <button data-id="javascript">js</button>
+                        <button data-id="markdown">md</button>
                     </div>
-
-                    <div class="tab-contents">
-                        <section id="htmlmixed">
-                            <textarea id="editor-htmlmixed"></textarea>
-                        </section>
-                        <section id="css">
-                            <textarea id="editor-css"></textarea>
-                        </section>
-                        <section id="javascript">
-                            <textarea id="editor-javascript"></textarea>
-                        </section>
-                        <section id="markdown">
-                            <textarea id="editor-markdown"></textarea>
-                        </section>
-                    </div>
+                    <div id="enable-preview">Preview</div>
                 </div>
-                
+
+                <div class="tab-contents">
+                    <section id="htmlmixed">
+                        <textarea id="editor-htmlmixed"></textarea>
+                    </section>
+                    <section id="css">
+                        <textarea id="editor-css"></textarea>
+                    </section>
+                    <section id="javascript">
+                        <textarea id="editor-javascript"></textarea>
+                    </section>
+                    <section id="markdown">
+                        <textarea id="editor-markdown"></textarea>
+                    </section>
+                </div>
             </div>
-            <div id="right_panel">
-                <div id="drag"></div> 
-                <iframe id="result" frameBorder=0></iframe>
-            </div>
+
         </div>
-        
-    </body>
+
+    </div>
+
+
+    <div id="preview" class="min">
+        <header>
+            <span data-close>x</span>
+            <span data-min>-</span>
+            <span data-max>+</span>
+        </header>
+        <iframe id="result" frameBorder=0></iframe>
+    </div>
+
     <script type="module">
+        import mevent from './src/mevent.js'
         import editor from './src/editor.js'
-        import resizeable from './src/resizeable.js'
         import tabs from './src/tabs.js'
-        
+        import floatWindow from './src/floatWindow.js'
+
         window.addEventListener('DOMContentLoaded', () => {
             editor()
-            resizeable()
             tabs()
+
+
+            let previewWindow = document.getElementById("preview")
+
+            floatWindow(previewWindow)
+
+            // if it's dragging, adjust iframe to not interrupt it
+            mevent.bind('isDragging', isDragging => {
+                let iframe = document.querySelector('iframe')
+
+                iframe.style.zIndex = 0
+
+                if (isDragging) {
+                    iframe.style.zIndex = -1
+                }
+            })
+
+            // when click md tab, hide float preview window
+            mevent.bind('selectedTag', tab => {
+                previewWindow.style.display = 'initial';
+
+                if (tab === 'markdown') previewWindow.style.display = "none";
+            })
         })
 
     </script>
+</body>
+
+
 </html>
