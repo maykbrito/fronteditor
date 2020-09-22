@@ -95,14 +95,14 @@
         import mevent from './src/lib/mevent.js'
         import editor from './src/editor.js'
         import tabs from './src/tabs.js'
-        import floatWindow from './src/floatWindow.js'
+        import preview from './src/preview.js'
 
         window.addEventListener('DOMContentLoaded', () => {
             editor()
             tabs()
 
             let previewWindow = document.getElementById("preview")
-            floatWindow(previewWindow)
+            preview(previewWindow)
 
             // if it's dragging, adjust iframe to not interrupt it
             mevent.bind('isDragging', isDragging => {
