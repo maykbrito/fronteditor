@@ -1,4 +1,4 @@
-#Fronteditor  
+# Fronteditor  
 Frontend development platform, created using Electron. With it you can edit your Javacript, HTML, CSS or markdown code and view in real time the changes in the floating tab on the side.  
 
 ## Where to test
